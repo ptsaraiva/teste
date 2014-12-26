@@ -4,57 +4,52 @@ import RPi.GPIO as GPIO
 import time
 import json
 import plotly.plotly as py
+from plotly.graph_objs import *
+
 import datetime
 import random
 
-print 'ola'
-
-pin = 19
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(pin, GPIO.OUT)
-
-GPIO.output(pin, True)
-time.sleep(1)
-GPIO.output(pin, False)
-time.sleep(1)
-
-print 'fim'
-
-GPIO.cleanup()
-
-
-with open('./config.json') as config_file:
-    plotly_user_config = json.load(config_file)
-
-    py.sign_in(plotly_user_config["plotly_username"], plotly_user_config["plotly_api_key"])
+# print 'ola'
+#
+# pin = 19
+# GPIO.setmode(GPIO.BOARD)
+# GPIO.setup(pin, GPIO.OUT)
+#
+# GPIO.output(pin, True)
+# time.sleep(0.5)
+# GPIO.output(pin, False)
+# time.sleep(0.5)
+#
+# print 'fim'
+#
+# GPIO.cleanup()
 
 
-url = py.plot([
-{
-    'x': [], 'y': [], 'type': 'scatter',
-    'stream': {
-        'token': plotly_user_config['plotly_streaming_tokens'][0],
-        'maxpoints': 200
-    }
-}], filename='Raspberry Pi Streaming Example Values')
-
-print "View your streaming graph here: ", url
-
-stream = py.Stream(plotly_user_config['plotly_streaming_tokens'][0])
-stream.open()
+py.sign_in("ptsaraiva", "g5xd13nl4n")
 
 
 
-#the main sensor reading and plotting loop
-for i in range(3):
+for i in range (5):
+    date = datetime.datetime.now()
+    temp_env = random.randrange(17.0,24.0)
+    temp_aqua = temp_env + 2
 
-    temp = random.randrange(17.0,24.0)
-    print 'time:' + str(datetime.datetime.now()) + ' temp: ' + str(temp)
-    # write the data to plotly
+    temperature_env = Scatter(
+        y=[temp_env],
+        x=[date],
+        name = 'temperatura ambiente'
+    )
 
-    stream.write({'x': datetime.datetime.now(), 'y': temp})
+    temperature_aqua = Scatter(
+        y=[temp_aqua],
+        x=[date],
+        name = 'temperatura aquario'
+    )
 
-    # delay between stream posts
-    time.sleep(5)
+    data = Data([temperature_env, temperature_aqua])
 
+    # Take 1: if there is no data in the plot, 'extend' will create new traces.
+    plot_url = py.plot(data, filename='temperature', fileopt='extend')
+
+    time.sleep(2)
 
