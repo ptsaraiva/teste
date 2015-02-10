@@ -1,14 +1,14 @@
 def get_temp_aqua():
     import random
-    return random.randrange(24,26)
+    return round(random.randrange(24,26),1)
 
 def get_temp_env():
     import random
-    return random.randrange(18,21)
+    return round(random.randrange(18,21),1)
 
 def get_ph():
     import random
-    return random.random() + 6.0
+    return round(random.random() + 6.0,1)
 
 
 def publica_plot():

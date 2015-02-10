@@ -16,7 +16,7 @@ data = Data([
 
 
 #t0 = (datetime.datetime.now() - datetime.timedelta(days = 3)).replace(minute=0,second=0,microsecond=0)
-t0 = (datetime.datetime.now() - datetime.timedelta(days = 3))
+t0 = (datetime.datetime.now() - datetime.timedelta(days = 1))
 t1 = datetime.datetime.now()
 print (t0)
 print (t1)

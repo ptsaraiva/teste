@@ -17,16 +17,17 @@ class sensor():
 
         if temp_output != -1:
             temp_string = lines[1].strip()[temp_output+2:]
-            temp_c = float(temp_string) / 1000.0
+            temp_c = round(float(temp_string) / 1000.0,1)
             return temp_c
 
 
     def get_temp_env(self):
-        return random.randrange(18,21)
+        #return random.randrange(18,21)
+        return self.get_temp_aqua()
 
     def get_ph(self):
         import random
-        return round(random.random() + 6.0, 2)
+        return round(random.random() + 6.0, 1)
 
 
     def temp_raw(self):

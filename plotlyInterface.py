@@ -29,7 +29,7 @@ class plotlyInterface():
 
         #get data from sensors
         temp_aqua = my_sens.get_temp_aqua()
-        temp_env = my_sens.get_temp_env()
+        temp_env = my_sens.get_temp_env() - 5
         ph = my_sens.get_ph()
 
 
