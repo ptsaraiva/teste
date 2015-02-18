@@ -1,5 +1,7 @@
 import time
 import random
+import temp_int
+import phinterface
 
 class sensor():
 
@@ -23,11 +25,12 @@ class sensor():
 
     def get_temp_env(self):
         #return random.randrange(18,21)
-        return self.get_temp_aqua()
+        t, h = temp_int.get_temp()
+        return t
 
     def get_ph(self):
-        import random
-        return round(random.random() + 6.0, 1)
+        #return round(random.random() + 6.0, 1)
+        return round(phinterface.get_ph2(),1)
 
 
     def temp_raw(self):

@@ -1,5 +1,5 @@
 import smbus
-
+import temp_int
 
 opampGain = 5.25
 pH7Cal = 2048.0  #assume ideal probe and amp conditions 1/2 of 4096
@@ -11,43 +11,50 @@ I2C_ADDRESS = 0x48
 
 bus = smbus.SMBus(1)
 
-#Set all ports in input mode
-#bus.write_byte(I2C_ADDRESS,1)
+def get_ph1():
 
-#Read all the unput lines
-value1=bus.read_byte(I2C_ADDRESS)
-print value1
-value2=bus.read_byte(I2C_ADDRESS)
-print value2
+    #Set all ports in input mode
+    #bus.write_byte(I2C_ADDRESS,1)
 
-#adc_result = value1
-adc_result =  (value1 * 256) + value2
-print 'adc_result: ' + str(adc_result)
+    #Read all the unput lines
+    value1=bus.read_byte(I2C_ADDRESS)
+    #print value1
+    value2=bus.read_byte(I2C_ADDRESS)
+    #print value2
 
-
-miliVolts = ((adc_result/4096.0)*vRef)*1000.0
-print 'miliVolts: ' + str(miliVolts)
-
-temp = ((((vRef*pH7Cal)/4096.0)*1000.0)- miliVolts)/opampGain
-pH = 7-(temp/pHStep)
-
-print 'pH: ' + str(pH)
+    #adc_result = value1
+    adc_result =  (value1 * 256) + value2
+    #print 'adc_result: ' + str(adc_result)
 
 
-print '---------'
+    miliVolts = ((adc_result/4096.0)*vRef)*1000.0
+    #print 'miliVolts: ' + str(miliVolts)
 
-bus = smbus.SMBus(1)
-data = bus.read_i2c_block_data(I2C_ADDRESS, 5)
-print data
-val = (data[0] << 8) + data[1]
-print val
+    temp = ((((vRef*pH7Cal)/4096.0)*1000.0)- miliVolts)/opampGain
+    pH = 7-(temp/pHStep)
 
-adc_result = val
+    #print 'pH: ' + str(pH)
 
-miliVolts = ((adc_result/4096.0)*vRef)*1000.0
-print 'miliVolts: ' + str(miliVolts)
+    return pH
 
-temp = ((((vRef*pH7Cal)/4096.0)*1000.0)- miliVolts)/opampGain
-pH = 7-(temp/pHStep)
 
-print 'pH: ' + str(pH)
+def get_ph2():
+
+    bus = smbus.SMBus(1)
+    data = bus.read_i2c_block_data(I2C_ADDRESS, 5)
+    #print data
+    val = (data[0] << 8) + data[1]
+    #print val
+
+    adc_result = val
+
+    miliVolts = ((adc_result/4096.0)*vRef)*1000.0
+    #print 'miliVolts: ' + str(miliVolts)
+
+    temp = ((((vRef*pH7Cal)/4096.0)*1000.0)- miliVolts)/opampGain
+    pH = 7-(temp/pHStep)
+
+    #print 'pH: ' + str(pH)
+
+    return pH
+

@@ -11,6 +11,8 @@ import plotly.tools as tls
 import publicar as pub
 import plotlyInterface as pInt
 
+import phinterface
+
 import datetime
 #import random
 
@@ -36,7 +38,7 @@ import datetime
 ####################################################
 #usar funcao:
 #py.sign_in(c["username"], c["api_key"])
-pub.publica_plot()
+#pub.publica_plot()
 
 #####################################################
 #usar classes:
