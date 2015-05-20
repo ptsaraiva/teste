@@ -58,3 +58,14 @@ def get_ph2():
 
     return pH
 
+
+def get_ph3():
+    bus = smbus.SMBus(1)
+    data = bus.read_i2c_block_data(I2C_ADDRESS, 5)
+    print data
+
+
+    val = (data[0] << 8) + data[1]
+    print val
+
+
