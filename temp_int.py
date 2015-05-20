@@ -9,3 +9,9 @@ def get_temp():
         temperature *= 2
 
     return (temperature, humidity)
+
+
+def get_temp2():
+    humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4)
+    print str((humidity)) + '% | ' + str((temperature))
+    return (temperature, humidity)
