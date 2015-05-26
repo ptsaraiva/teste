@@ -10,13 +10,26 @@ class plotlyInterface():
     def __init__(self):
         self.username = None
         self.api_key = None
-        self.setup()
+        #self.setup()
 
 
     def setup(self):
+        print 'ler ficheiro autenticacao'
         my_cred = tls.get_credentials_file()
-        py.sign_in(my_cred['username'], my_cred['api_key'])
-
+        print my_cred
+        if (my_cred['username'] != '' ) and  (my_cred['api_key'] != '') :
+            print 'inicio de autenticacao'
+            t=py.sign_in(my_cred['username'], my_cred['api_key'])
+            print 'resultado autenticaco: '+ str(t)
+            if t is None:
+                print 'autenticacao concluida com sucesso'
+                return 0
+            else:
+                print '!!! ERRO de autenticacao'
+                return -1
+        else:
+            print '!!! ERRO a ler ficheiro de autenticacao plotly - pelo menos um dos campos esta vazio'
+            return -1
 
     def plotData_extend(self, plot_name):
 
@@ -28,9 +41,14 @@ class plotlyInterface():
         my_sens = sensorInterface.sensor()
 
         #get data from sensors
+        print 'starting get data from sensors'
         temp_aqua = my_sens.get_temp_aqua()
         temp_env = my_sens.get_temp_env()
         ph = my_sens.get_ph()
+
+        #data print for debug
+        print 'data to print: ' + str(date) + ' | temp_aqua: ' + str(temp_aqua) + ' | temp_env: ' + str(temp_env) + ' | ph: ' + str(ph)
+
 
 
         #set the data into properly variables
@@ -55,11 +73,11 @@ class plotlyInterface():
         data = Data([temperature_env_data, temperature_aqua_data, ph_data])
 
         #publish data to plotly
-        plot_url = py.plot(data, filename=plot_name, fileopt='extend')
+        t=self.setup() #authentication
+        if t==0:
+            print 'publishing data...'
+            plot_url = py.plot(data, filename=plot_name, fileopt='extend')
+            print plot_url
 
-        #data print for debug
-        print str(date) + ' | temp_aqua: ' + str(temp_aqua) + ' | temp_env: ' + str(temp_env) + ' | ph: ' + str(ph)
-
-
-
-
+        else:
+            print '!!! ERRO de autenticacao: ' + str(t)

@@ -9,6 +9,7 @@ class sensor():
         self.interface = None
 
     def get_temp_aqua(self):
+        print 'getting aqua temperature'
         #return random.randrange(24,26)
 
         lines = self.temp_raw()
@@ -20,15 +21,20 @@ class sensor():
         if temp_output != -1:
             temp_string = lines[1].strip()[temp_output+2:]
             temp_c = round(float(temp_string) / 1000.0,1)
+            print temp_c
             return temp_c
+        else:
+            print 'error reading aqua temp'
 
 
     def get_temp_env(self):
+        print 'getting environment temperature and humidity'
         #return random.randrange(18,21)
         t, h = temp_int.get_temp2()
         return round (t, 1)
 
     def get_ph(self):
+        print 'getting ph'
         #return round(random.random() + 6.0, 1)
         return round(phinterface.get_ph2(),1)
 

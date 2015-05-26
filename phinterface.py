@@ -1,6 +1,7 @@
 import smbus
 import temp_int
 
+
 opampGain = 5.25
 pH7Cal = 2048.0  #assume ideal probe and amp conditions 1/2 of 4096
 pH4Cal = 1286.0  #using ideal probe slope we end up this many 12bit units away on the 4 scale
@@ -13,6 +14,7 @@ bus = smbus.SMBus(1)
 
 def get_ph1():
 
+    print 'get_ph1: '
     #Set all ports in input mode
     #bus.write_byte(I2C_ADDRESS,1)
 
@@ -33,18 +35,31 @@ def get_ph1():
     temp = ((((vRef*pH7Cal)/4096.0)*1000.0)- miliVolts)/opampGain
     pH = 7-(temp/pHStep)
 
-    #print 'pH: ' + str(pH)
+    print 'pH: ' + str(pH)
 
     return pH
 
 
 def get_ph2():
+    print 'get_ph2: '
+
+    data = []
+    data_aux = []
 
     bus = smbus.SMBus(1)
-    data = bus.read_i2c_block_data(I2C_ADDRESS, 5)
+    data = bus.read_i2c_block_data(I2C_ADDRESS, 1,32)
     #print data
-    val = (data[0] << 8) + data[1]
-    #print val
+
+    #print len(data)
+    for x in range (0,len(data)-1, 2):
+        #print str(x) + ' : ' + str(data[x]) + '.' + str(data[x+1])
+        val = (data[x] << 8) + data[x+1]
+        #print val
+        data_aux.append(val)
+
+    #median value
+    val = sum(data_aux)/len(data_aux)
+    print val
 
     adc_result = val
 
@@ -54,18 +69,35 @@ def get_ph2():
     temp = ((((vRef*pH7Cal)/4096.0)*1000.0)- miliVolts)/opampGain
     pH = 7-(temp/pHStep)
 
-    #print 'pH: ' + str(pH)
+    print 'pH: ' + str(pH)
 
     return pH
 
 
 def get_ph3():
+    print 'get_ph3: '
+
+    data = []
+    data_aux = []
+
     bus = smbus.SMBus(1)
-    data = bus.read_i2c_block_data(I2C_ADDRESS, 5)
-    print data
+    data = bus.read_i2c_block_data(I2C_ADDRESS, 1,32)
+    #print data
 
+    #print len(data)
+    for x in range (0,len(data)-1, 2):
+        #print str(x) + ' : ' + str(data[x]) + '.' + str(data[x+1])
+        val = (data[x] << 8) + data[x+1]
+        #print val
+        data_aux.append(val)
 
-    val = (data[0] << 8) + data[1]
+    #print data_aux
+    #print sum(data_aux)
+    #print len(data_aux)
+
+    #median value
+    val = sum(data_aux)/len(data_aux)
     print val
+
 
 

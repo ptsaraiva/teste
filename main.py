@@ -43,10 +43,22 @@ import datetime
 #####################################################
 #usar classes:
 #p = plotlyInterface.plotlyInterface()
+print '#####################################################################################################'
+print 'INICIO'
+
 p = pInt.plotlyInterface()
-p.setup()
+
+
+# a = p.setup()
+# if a==0:
+#     p.plotData_extend("data aqua")
+# else:
+#     print 'erro de autenticacao: ' + str(a)
+
+
 p.plotData_extend("data aqua")
 
+print 'FIM'
 
 ####################################################
 # for i in range(5):
