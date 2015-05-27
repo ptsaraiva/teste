@@ -45,6 +45,10 @@ import datetime
 #p = plotlyInterface.plotlyInterface()
 print '#####################################################################################################'
 print 'INICIO'
+#get current time
+date1 = datetime.datetime.now()
+date1 = date1.replace(microsecond=0)
+print 'timestamp: ' + str(date1)
 
 p = pInt.plotlyInterface()
 
@@ -57,6 +61,15 @@ p = pInt.plotlyInterface()
 
 
 p.plotData_extend("data aqua")
+
+
+#get current time
+date2 = datetime.datetime.now()
+date2 = date2.replace(microsecond=0)
+print 'timestamp: ' + str(date2)
+
+duration = date2 - date1
+print 'duration: ' + str(duration)
 
 print 'FIM'
 
