@@ -46,7 +46,9 @@ def publica_plot():
         name = 'ph'
     )
 
+
     data = Data([temperature_env_data, temperature_aqua_data, ph_data])
+
 
     #publicar dados
     plot_url = py.plot(data, filename='temperature', fileopt='extend')

@@ -101,6 +101,8 @@ class plotlyInterface():
 
         data = Data([temperature_env_data, temperature_aqua_data, ph_data])
 
+        print data
+
         #publish data to plotly
         t=self.setup() #authentication
         if t==0:
