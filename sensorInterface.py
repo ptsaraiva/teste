@@ -36,7 +36,7 @@ class sensor():
     def get_ph(self):
         print 'getting ph'
         #return round(random.random() + 6.0, 1)
-        return round(phinterface.get_ph2(),1)
+        return round(phinterface.get_ph4(),1)
 
 
     def temp_raw(self):

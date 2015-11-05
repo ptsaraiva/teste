@@ -1,7 +1,7 @@
 import pickle
 import shelve
 
-data = {'PH4':4, 'PH7':7, 'outro': 'cenas', 'P': 4.15}
+data = {'PH4':4.0, 'PH7':7.0, 'ADC7': 2048.0, 'ADC4': 1270.0}
 
 filename = "conf_data"
 
@@ -10,8 +10,19 @@ pickle.dump(data, fileObject)
 fileObject.close()
 
 fileObject = open (filename, 'r')
-dados = pickle.load(fileObject)
-print dados
+data = pickle.load(fileObject)
+print data
+
+data ['ADC4']=1280.0
+
+fileObject = open(filename, 'wb')
+pickle.dump(data, fileObject)
+fileObject.close()
+
+fileObject = open (filename, 'r')
+data = pickle.load(fileObject)
+print data
+
 
 
 s = shelve.open('test_shelf.db')
