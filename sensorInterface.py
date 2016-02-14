@@ -33,6 +33,12 @@ class sensor():
         t, h = temp_int.get_temp2()
         return round (t, 1)
 
+    def get_hum_env(self):
+        print 'getting environment humidity'
+        #return random.randrange(18,21)
+        t, h = temp_int.get_temp2()
+        return round (h, 1)
+
     def get_ph(self):
         print 'getting ph'
         #return round(random.random() + 6.0, 1)
